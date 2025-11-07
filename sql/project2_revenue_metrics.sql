@@ -5,7 +5,7 @@ WITH base AS (
         p.game_name,
         DATE_TRUNC('month', p.payment_date) AS payment_month,
         SUM(p.revenue_amount_usd) AS revenue,
-        MIN(DATE_TRUNC('month', p.payment_date)) OVER (PARTITION BY p.user_id) AS first_payment_month, -- мин. по юзеру
+        MIN(DATE_TRUNC('month', p.payment_date)) OVER (PARTITION BY p.user_id) AS first_payment_month, 
         u.language,
         u.age
     FROM project.games_payments p

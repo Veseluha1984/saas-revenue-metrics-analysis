@@ -1,130 +1,176 @@
-SaaS Revenue Metrics Dashboard (SQL + Tableau)
+# SaaS Revenue Metrics Dashboard (SQL + Tableau)
 
-End-to-end analysis of monetization, user retention, churn, and MRR dynamics for a subscription-based digital product.
-This project demonstrates a complete analytical workflow — from raw transactional data in PostgreSQL to an interactive Tableau dashboard.
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)]()
+[![SQL](https://img.shields.io/badge/SQL-Expert-blue)]()
+[![Tableau](https://img.shields.io/badge/Tableau-Public-orange?logo=tableau&logoColor=white)]()
+[![Analytics](https://img.shields.io/badge/Data%20Analytics-Business%20Intelligence-brightgreen)]()
 
-<p align="center"> <img src="tableau/dashboard_screenshots/sample.png" width="90%"> </p>
-🚀 Project Overview
+End-to-end analysis of subscription revenue, monetization, churn, and user behavior.  
+This project demonstrates a complete analytics workflow — from raw PostgreSQL data to an interactive Tableau dashboard.
 
-This project provides an end-to-end revenue analytics pipeline that helps understand:
+<p align="center">
+  <img src="tableau/dashboard_screenshots/sample.png" width="90%">
+</p>
 
-How user payments evolve over time
+---
 
-What drives monthly recurring revenue (MRR)
+## 🚀 Project Overview
 
-How churn affects revenue
+This project delivers a modern and actionable revenue analytics system that helps SaaS teams understand:
 
-Which user segments are most profitable or high-risk
+- MRR (Monthly Recurring Revenue) dynamics  
+- Churn impact on revenue stability  
+- User behavior across segments  
+- Monetization efficiency  
+- Revenue expansion & contraction flows  
 
 It includes:
 
-✅ SQL transformation logic (PostgreSQL)
-✅ 15+ revenue & user analytics metrics
-✅ Interactive Tableau dashboard
-✅ Segmentation by age, language, and payment month
-✅ Revenue Change Factor breakdown (New, Expansion, Contraction, Churn)
+✅ Advanced SQL transformation logic  
+✅ 15+ SaaS revenue & user metrics  
+✅ Interactive, multi-level Tableau dashboard  
+✅ Segmentation by age, language, and payment month  
+✅ Clear breakdown of revenue change factors  
 
-🔗 Live Dashboard (Tableau Public):
+🔗 **Live Dashboard (Tableau Public):**  
 https://public.tableau.com/views/Final_Project_17624212619970/RevenueOverview
 
-🧩 Tech Stack
+---
 
-PostgreSQL
+## 🧩 Tech Stack
 
-SQL Window Functions
+- **PostgreSQL** — dataset construction & transformation  
+- **SQL Window Functions** — lag(), lead(), dense_rank(), rolling metrics  
+- **Tableau Public** — interactive BI dashboards  
+- **LOD Expressions** — FIXED / INCLUDE / EXCLUDE  
+- **Time-Series & Segmentation Analysis**  
 
-Tableau Public
+---
 
-LOD Expressions
+## 📁 Repository Structure
 
-Time-series analysis
-
-📁 Repository Structure
 .
 ├── sql/
-│   └── project2_revenue_metrics.sql     # Final SQL script (clean dataset generation)
+│   └── project2_revenue_metrics.sql
 │
 ├── tableau/
 │   └── dashboard_screenshots/
-│       └── sample.png                    # Main dashboard preview
+│       └── sample.png
 │
 └── README.md
 
-📊 Key Metrics Included
-Revenue Metrics
+---
 
-Monthly Recurring Revenue (MRR)
+## 📊 Key Metrics Included
 
-New MRR
+### 🔵 Revenue Metrics
+- Monthly Recurring Revenue (MRR)
+- New MRR
+- Expansion MRR
+- Contraction MRR
+- Churned Revenue
+- Revenue Churn Rate
 
-Expansion MRR
+### 🟠 User Metrics
+- Paid Users  
+- New Paid Users  
+- Returned Users  
+- Churned Users  
 
-Contraction MRR
+### 🟢 Monetization
+- ARPPU (Average Revenue Per Paid User)
 
-Churned Revenue
+### 🟣 Lifetime & Value
+- LT (Customer Lifetime)  
+- LTV (Customer Lifetime Value)  
 
-Revenue Churn Rate
+### 🟡 Segmentation
+- Age group  
+- Language  
+- Payment month  
 
-User Metrics
+---
 
-Paid Users
+## 🔍 Insights & Findings
 
-New Paid Users
+### ✅ Revenue Growth
+- MRR grows steadily month-over-month, especially in Q3–Q4  
+- Expansion MRR is a major positive contributor  
 
-Churned Users
+### ✅ Monetization Highlights
+- Age **18–24 (UK)** → highest ARPPU (most profitable segment)  
+- Returned users provide meaningful incremental revenue  
+- Monetization differs significantly by language group  
 
-Returned Users
+### ✅ Churn Analysis
+- Age **25–34 (UK)** has the highest churn rate  
+- Strong negative correlation between ARPPU and churn  
 
-Monetization
+### ✅ Behavioral Patterns
+- Revenue stability improves when **Expansion > Contraction + Churn**  
+- Some segments maintain high MRR despite smaller user bases  
+- LTV decreases as churn increases  
 
-ARPPU (Average Revenue Per Paid User)
+---
 
-Lifetime & Value
+## 🏗 SQL Workflow (Architecture Overview)
 
-Customer Lifetime (LT)
+Dataset is built using a layered SQL approach:
 
-Lifetime Value (LTV)
+### 1️⃣ Base Layer
+Aggregates transactional payments:
+- monthly revenue  
+- first-payment month per user  
+- prev/next revenue values (window functions)  
 
-Segmentation
+### 2️⃣ User Dimension Layer
+Stable attributes via:
+MAX(language), MAX(age), MIN(first_payment_month)
 
-By age group
+### 3️⃣ Time Grid Layer
+Generated using:
+generate_series('2022-03-01', '2022-12-01', '1 month')
 
-By language
+### 4️⃣ Revenue Movement Layer
+Calculates:
+- New revenue  
+- Expansion  
+- Contraction  
+- Churn  
 
-By payment month
+### 5️⃣ Final Dataset
+A clean, reusable dataset for Tableau.
 
-🔍 Insights & Findings
+✅ Supports segmentation, churn modeling, MRR analytics, LTV evaluation.
 
-MRR shows stable month-over-month growth, especially in Q3–Q4
+---
 
-Expansion MRR strongly drives positive net MRR
+## ▶️ How to Reproduce
 
-Age 18–24 (UK) → most profitable (highest ARPPU)
+1. Clone this repository  
+2. Open `sql/project2_revenue_metrics.sql`  
+3. Connect to PostgreSQL  
+4. Run the script (dataset will be created automatically)  
+5. Load the output into Tableau  
+6. Explore the interactive dashboard  
 
-Age 25–34 (UK) → highest churn-risk segment
+---
 
-Clear negative correlation between ARPPU and Churn Rate
+## 🧭 Future Improvements
 
-Returned users provide meaningful incremental revenue in multiple months
+- Cohort retention analysis  
+- Forecasting (Prophet / exponential smoothing)  
+- Revenue anomaly detection  
+- LTV by segment (EN / RU / UK)  
+- AI-based churn prediction  
+- Multi-dashboard navigation in Tableau  
 
-▶️ How to Reproduce
+---
 
-Clone the repository
+## 👤 Author
 
-Open /sql/project2_revenue_metrics.sql in any SQL editor
-
-Connect to PostgreSQL
-
-Execute the script to generate the clean analytical dataset
-
-Load the dataset into Tableau
-
-Explore the dashboard locally or via Tableau Public
-
-👤 Author
-
-Yauheni Vesialukha — Data Analyst
-Revenue Analytics • SQL • Tableau
-📍 Switzerland
+**Yauheni Vesialukha** — Data Analyst  
+Revenue Analytics • SQL • Tableau  
+📍 Switzerland  
 
 📧 yauhenivesialukha@icloud.com
